@@ -49,9 +49,13 @@ const CustomerSchema = new mongoose.Schema({
         required: true
     },
     zip:{
-        type: Number,
+        type: String,
         required: true
     },
+    date:{
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model('Customers', CustomerSchema);

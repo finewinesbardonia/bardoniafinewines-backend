@@ -53,7 +53,12 @@ const ProductSchema = new mongoose.Schema({
     },
     upc:{
         type:String
-    }
+    },
+    status:{
+        type:String,
+        enum:['active','inactive'],
+        default:'active'
+    },
 });
 
 module.exports = mongoose.model('Products', ProductSchema);

@@ -194,10 +194,39 @@ const login = async (req, res) => {
   }
 };
 
+const search = async (req, res) => {
+  console.log("LOG: SEARCH CUSTOMER")
+  const { query } = req.body;
+  try {
+    // Use find to retrieve all customer
+    const allCustomer = await Customer.find({
+      $or: [
+        { firstName: { $regex: query, $options: "i" } },
+        { lastName: { $regex: query, $options: "i" } },
+        { email: { $regex: query, $options: "i" } },
+        { phoneNumber: { $regex: query, $options: "i" } },
+        { address: { $regex: query, $options: "i" } },
+        { city: { $regex: query, $options: "i" } },
+        { state: { $regex: query, $options: "i" } },
+        { zip: { $regex: query, $options: "i" } },
+      ],
+    });
+    
+    console.log("All Customers: ",allCustomer);
+
+    // Handle the retrieved customers, for example:
+    res.json({ status: "success", customers: allCustomer });
+  } catch (e) {
+    console.error(e);
+    res.json({ status: "failed", message: "Internal server error" });
+  }
+};
+
 module.exports = {
   create,
   verify,
   update,
   getAllCustomer,
-  login, // Include the login function in the module exports
+  login,
+  search
 };
